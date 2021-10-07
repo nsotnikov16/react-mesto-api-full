@@ -1,0 +1,11 @@
+.profile__username-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (max-width: 470px) {
+    .profile__username-btn {
+        justify-content: flex-start;
+    }
+}

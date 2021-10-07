@@ -1,0 +1,29 @@
+.profile__username{
+    margin: 0;
+    font-size: 42px;
+    line-height: 48px;
+    font-weight: 500;
+    padding-bottom: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 294px;
+    
+}
+
+@media (max-width: 670px) {
+    .profile__username{
+        font-size: 27px;
+        line-height: 32.68px;
+    }
+}
+
+@media (max-width: 470px) {
+    .profile__username {
+        padding-bottom: 12px;
+        padding-top: 26px;
+        padding-left: 28px;
+        text-align: center;
+        max-width: 189px;
+    }
+}

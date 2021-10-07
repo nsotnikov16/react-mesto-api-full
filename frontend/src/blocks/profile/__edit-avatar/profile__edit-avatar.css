@@ -1,0 +1,12 @@
+.profile__edit-avatar{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -12.5px;
+    margin-top: -12.5px;
+    visibility: hidden;
+}
+
+.profile__edit-avatar:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,13 @@
+.profile__into{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-self: center;
+    padding-left: 30px;
+}
+
+@media (max-width: 470px) {
+    .profile__into {
+        padding-left: 0;
+    }
+}

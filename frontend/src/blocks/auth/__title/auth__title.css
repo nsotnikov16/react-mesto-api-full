@@ -1,0 +1,12 @@
+.auth__title{
+    margin: 0 0 50px;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+@media (max-width: 880px) {
+    .auth__title{ 
+        font-size: calc(20px + (4 + 4 * 0.7) * ((100vw - 320px) / 880));
+        margin-bottom: calc(40px + (10 + 10 * 0.7) * ((100vw - 320px) / 880));
+    }
+}

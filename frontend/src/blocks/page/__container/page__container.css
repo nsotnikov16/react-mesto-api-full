@@ -1,0 +1,9 @@
+.page__container {
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .page__container {
+        margin: 0 19px;
+    }
+}

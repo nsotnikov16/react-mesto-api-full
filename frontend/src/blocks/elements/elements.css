@@ -1,0 +1,8 @@
+.elements{
+    color: #000000;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 282px));
+    gap: 20px 17px;
+    margin: 0 auto;
+    justify-content: center;
+}

@@ -1,0 +1,16 @@
+.auth__link{
+    margin: 15px 0 0;
+    text-decoration: none;
+    color: white;
+}
+
+.auth__link:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+@media (max-width: 880px) {
+    .auth__link {
+        margin-top: calc(20px + (5 + 5 * 0.7) * ((100vw - 320px) / 880))
+    }
+}

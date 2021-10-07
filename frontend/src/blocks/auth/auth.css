@@ -1,0 +1,16 @@
+.auth{
+    margin: 60px auto 0;
+    width: 358px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 880px) {
+    .auth {
+        width: calc(260px + (98 + 98 * 0.7) * ((100vw - 320px) / 880))
+    }
+    
+}

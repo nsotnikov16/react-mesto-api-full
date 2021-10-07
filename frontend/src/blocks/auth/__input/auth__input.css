@@ -1,0 +1,16 @@
+.auth__input{
+    background-color: inherit;
+    width: 100%;
+    border: 0;
+    margin-bottom: 30px;
+    outline: none;
+    color: white;
+    padding-bottom: 13px;
+    border-bottom: 2px solid #CCCCCC;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.auth__input:last-child {
+    margin-bottom: 0;
+}

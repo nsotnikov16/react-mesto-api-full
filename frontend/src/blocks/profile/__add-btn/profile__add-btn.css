@@ -1,0 +1,37 @@
+.profile__add-btn{
+    display: block;
+    width: 150px;
+    height: 50px;
+    border: 2px solid #FFFFFF;
+    border-radius: 2px;
+    box-sizing: border-box;
+    background-color: transparent; /* По макету стоит определенный светлый фон, но получается серая кнопка. Думаю таким способом подойдет */
+    color: #ffffff;
+    background-image: url(../../../images/plus.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-self: flex-end;
+}
+
+.profile__add-btn:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+@media (max-width: 570px) {
+    .profile__add-btn {
+        width: 100px;
+    }
+}
+
+@media (max-width: 520px) {
+    .profile__add-btn {
+        width: 50px;
+    }
+}
+
+@media (max-width: 470px) {
+    .profile__add-btn {
+        width: 282px;
+    }
+}
