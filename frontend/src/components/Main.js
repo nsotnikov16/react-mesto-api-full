@@ -3,6 +3,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import editAvatar from "../images/edit-avatar.svg";
 import { Card } from "./Card";
 
+
 function Main({
   cards,
   onCardDelete,
@@ -14,6 +15,7 @@ function Main({
   onEditProfile,
   onAddPlace,
   onCardOpen,
+
 }) {
   const currentUser = useContext(CurrentUserContext);
   function cardClickImgOpen(data) {

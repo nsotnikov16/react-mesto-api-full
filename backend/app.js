@@ -8,42 +8,30 @@ const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./utils/classesErrors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-/* const cors = require('./middlewares/cors') */
-const cors = require('cors');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const allowedCors = [
-  'https://byns16.nomoredomains.club',
-  'http://byns16.nomoredomains.club',
-  'localhost:3000'
-];
-
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedCors.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error("Not allowed by CORS"))
-    }
-  }
- }
-
-app.use('*', cors(corsOptions))
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(require('./middlewares/cors'));
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(requestLogger);
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required(), // перепутал
+    password: Joi.string().required(),
   }),
 }), login);
 

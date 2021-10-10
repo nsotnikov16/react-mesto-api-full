@@ -1,9 +1,12 @@
-import { apiRequest } from "./constants";
-
 export class Api {
-  constructor(options) {
-    this._headers = options.headers;
-    this._url = options.baseUrl;
+  constructor(baseUrl) {
+    this._headers = (token) => {
+      return {
+        Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      }
+    };
+    this._url = baseUrl;
   }
 
   _handleResponse(res) {
@@ -11,25 +14,25 @@ export class Api {
       return res.json();
     }
 
-    return Promise.reject(`Ошибка: ${res.status}, проверьте URL`);
+    return res.json().then(({ message }) => Promise.reject(`${message}`));
   }
 
-  getInitialCards() {
+  getInitialCards(token) {
     return fetch(`${this._url}/cards`, {
-      headers: this._headers,
+      headers: this._headers(token)
     }).then(this._handleResponse);
   }
 
-  getUserData() {
+  getUserData(token) {
     return fetch(`${this._url}/users/me`, {
-      headers: this._headers,
+      headers: this._headers(token),
     }).then(this._handleResponse);
   }
 
-  editProfile(inputsValue) {
+  editProfile(inputsValue, token) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this._headers(token),
       body: JSON.stringify({
         name: inputsValue.name,
         about: inputsValue.about,
@@ -37,20 +40,20 @@ export class Api {
     }).then(this._handleResponse);
   }
 
-  editAvatar(inputsValue) {
+  editAvatar(inputsValue, token) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this._headers(token),
       body: JSON.stringify({
         avatar: inputsValue.avatar,
       }),
     }).then(this._handleResponse);
   }
 
-  addNewCardServer(inputsValue) {
+  addNewCardServer(inputsValue, token) {
     return fetch(`${this._url}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: this._headers(token),
       body: JSON.stringify({
         name: inputsValue.name,
         link: inputsValue.link,
@@ -58,34 +61,34 @@ export class Api {
     }).then(this._handleResponse);
   }
 
-  putLikeCard(cardId) {
-    return fetch(`${this._url}/cards/likes/${cardId}`, {
+  putLikeCard(cardId, token) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: this._headers,
+      headers: this._headers(token),
     }).then(this._handleResponse);
   }
 
-  deleteLikeCard(cardId) {
-    return fetch(`${this._url}/cards/likes/${cardId}`, {
+  deleteLikeCard(cardId, token) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this._headers(token),
     }).then(this._handleResponse);
   }
 
-  changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${this._url}/cards/likes/${cardId}`, {
-      method: isLiked ? 'PUT' : 'DELETE',
-      headers: this._headers,
+  changeLikeCardStatus(cardId, isLiked, token) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: isLiked ? "PUT" : "DELETE",
+      headers: this._headers(token),
     }).then(this._handleResponse);
   }
 
-  deleteCard(cardId) {
+  deleteCard(cardId, token) {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this._headers(token),
     }).then(this._handleResponse);
   }
 }
 
-const api = new Api(apiRequest);
-export default api
+const api = new Api('https://api.byns16.nomoredomains.monster');
+export default api;
