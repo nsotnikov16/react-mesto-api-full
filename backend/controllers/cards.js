@@ -27,22 +27,25 @@ module.exports.getCards = (req, res, next) => {
 };
 
 module.exports.deleteCardId = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.cardId)
-    .then((data) => {
-      if (!data) {
-        next(new NotFoundError('Карточка с указанным _id не найдена'));
-      }
-      if (req.user._id !== String(data.owner)) {
-        next(new ForbiddenError('Доступ запрещен'));
-      }
-      reqSuccess(res, { message: 'Card deleted' });
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        throw new BadRequestError('Переданы некорректные данные в метод удаления карточки');
-      }
-    })
-    .catch(next);
+  Card.findById(req.params.cardId).then((card) => {
+    if (!card) {
+      return next(new NotFoundError('Карточка с указанным _id не найдена'));
+    }
+    if (req.user._id !== String(card.owner)) {
+      return next(new ForbiddenError('Доступ запрещен'));
+    }
+
+    return Card.findByIdAndRemove(req.params.cardId)
+      .then(() => {
+        reqSuccess(res, { message: 'Card deleted' });
+      })
+      .catch((err) => {
+        if (err.name === 'CastError') {
+          throw new BadRequestError('Переданы некорректные данные в метод удаления карточки');
+        }
+      })
+      .catch(next);
+  });
 };
 
 module.exports.likeCard = (req, res, next) => Card.findByIdAndUpdate(
@@ -51,9 +54,9 @@ module.exports.likeCard = (req, res, next) => Card.findByIdAndUpdate(
   { new: true },
 ).then((data) => {
   if (!data) {
-    next(new NotFoundError('Карточка с указанным _id не найдена'));
+    return next(new NotFoundError('Карточка с указанным _id не найдена'));
   }
-  return reqSuccess(res, data/* { message: 'Like card' } */);
+  return reqSuccess(res, data);
 })
   .catch((err) => {
     if (err.name === 'CastError') {
@@ -68,9 +71,9 @@ module.exports.dislikeCard = (req, res, next) => Card.findByIdAndUpdate(
   { new: true },
 ).then((data) => {
   if (!data) {
-    throw new NotFoundError('Карточка с указанным _id не найдена');
+    return next(new NotFoundError('Карточка с указанным _id не найдена'));
   }
-  return reqSuccess(res, data/* { message: 'Dislike card' } */);
+  return reqSuccess(res, data);
 })
   .catch((err) => {
     if (err.name === 'CastError') {

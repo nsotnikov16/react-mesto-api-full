@@ -25,7 +25,9 @@ module.exports.createUser = (req, res, next) => {
       if (err) next(err);
       return User.create({
         name, about, avatar, email, password: hash,
-      }).then((user) => reqSuccess(res, user))
+      // eslint-disable-next-line no-shadow
+      }).then(({ _id, email }) => reqSuccess(res,
+        { _id, email }))
         .catch((error) => {
           if (error.name === 'ValidationError') {
             throw new BadRequestError('Переданы некорректные данные при создании профиля');

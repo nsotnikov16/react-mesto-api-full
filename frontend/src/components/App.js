@@ -43,6 +43,7 @@ function App() {
       .then((res) => {
         if (res.ok) {
           setIsRegisterSuccess(true);
+          history.push("/sign-in");
         } else {
           setIsRegisterSuccess(false);
         }

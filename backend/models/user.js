@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-escape */
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const validator = require('validator');
 const UnauthorizedError = require('../utils/classesErrors/UnauthorizedError');
 
 const userSchema = new mongoose.Schema({
@@ -8,6 +9,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator: (v) => {
+        validator.isEmail(v);
+      },
+      message: 'Некорректный Email',
+    },
   },
   password: {
     type: String,
@@ -28,6 +35,12 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
+    validate: {
+      validator: (v) => {
+        validator.isURL(v);
+      },
+      message: 'Некорректная ссылка',
+    },
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
   },
 });
